@@ -1,12 +1,13 @@
 package com.song.woo.member.service;
 
-import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 import com.song.woo.member.model.Member;
 
-@Service
+
 public interface MemberService {
 	//저장
 	public Member memberSave(Member member);
@@ -14,4 +15,6 @@ public interface MemberService {
 	public Optional<Member> getMemberInfo(Long id);
 	//로그인
 	public Member login(Member member);
+	//리스트
+	public List<Member> memberList();
 }

@@ -1,0 +1,49 @@
+#application.yml의 profile설정값에 의해 동적으로 yml파일이 설정된다.
+#ex)application-{profile}.properties
+
+############## properties ################
+comp:
+  name: test
+  hp: 02-123-1234
+  addr: testAddr
+  
+profile:
+  name: test
+##########################################
+
+################### 설정 #################
+server:
+  port: 8081
+
+spring:
+  h2:
+    console:
+      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
+      path: /db  # 콘솔의 경로
+
+  datasource:
+    driver-class-name: org.h2.Driver  #h2 드라이버 설정
+  
+  jpa:
+    hibernate:
+      ddl-auto: update # 스키마관리 
+    show-sql: true # sql 디버그
+    properties:
+      hibernate:
+        format_sql : true # sql 포멧정리
+      
+  devtools: # 핫리로드 사용
+    livereload:
+      enabled: true
+
+logging:
+  file: logs/application.log #생성되는 로그파일 위치
+  level:
+    org:
+      thymeleaf: DEBUG
+      springframework.web: DEBUG
+      hibernate.SQL: DEBUG
+      quartz.core: DEBUG
+      h2.server.web: DEBUG
+    com: #패키지별 로깅 설정
+      song: DEBUG

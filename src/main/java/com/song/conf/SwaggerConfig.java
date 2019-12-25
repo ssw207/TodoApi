@@ -1,4 +1,4 @@
-package com.song.woo.conf;
+package com.song.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
