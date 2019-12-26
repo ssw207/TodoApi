@@ -10,15 +10,14 @@ import javax.validation.constraints.Pattern;
 
 import com.song.woo.common.domain.BaseEntity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Setter
-@ToString
-@Builder
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 생성자를 외부에 열어두지 않는다.
 public class Member extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -35,4 +34,13 @@ public class Member extends BaseEntity {
 	
 	@NotBlank(message = "이름은 필수 값 입니다!!")
 	private String memName;
+
+	@Builder
+	public Member(String memId, String memPw, String memName) {
+		this.memId = memId;
+		this.memPw = memPw;
+		this.memName = memName;
+	}
+	
+	
 }

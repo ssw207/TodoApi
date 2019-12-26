@@ -5,14 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.song.woo.todo.dao.TodoRepository;
 import com.song.woo.todo.model.ToDoItem;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class ToDoItemServiceImpl implements ToDoItemService{
 	

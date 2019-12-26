@@ -1,20 +1,8 @@
 package com.song.woo.member.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.util.Optional;
-
-import org.assertj.core.api.AssertFactory;
-import org.hamcrest.Matcher;
-import org.hamcrest.core.Is;
-import org.hamcrest.core.IsEqual;
-import org.hamcrest.core.IsNot;
-import org.hamcrest.core.IsNull;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +21,10 @@ public class domainTest {
 	@Test
 	public void 저장_단일조회_테스트(){
 		//given
-		Member member = new Member();
-		member.setMemId("admin");
-		
-		memberDao.save(member);
+		Member dto= memberDao.save(Member.builder().memId("admin").memPw("1234").memName("name").build());
 		
 		//when
-		Member memberInfo = memberDao.findAll().get(0);
+		Member memberInfo = memberDao.findByMemId(dto.getMemId());
 		
 		//then
 		assertThat( memberInfo.getMemId() , is("admin") );

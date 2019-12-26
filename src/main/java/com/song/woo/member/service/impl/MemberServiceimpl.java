@@ -16,20 +16,22 @@ public class MemberServiceimpl implements MemberService{
 	MemberDao memberDao;
 	
 	@Override
-	public Member memberSave(Member member) {
+	public Member memberSave(Member member) throws Exception {
+		if (isDuplicateId(member.getMemId())) {
+			throw new Exception("중복된 아이디 입니다.");
+		}
 		return memberDao.save(member);
 	}
 
 	@Override
-	public Optional<Member> getMemberInfo(Long id) {
-		return memberDao.findById(id);
+	public Member getMemberInfo(String memId) {
+		return memberDao.findByMemId(memId);
 	}
 
 	@Override
-	public Member login(Member member) {
-		Optional<Member> o = memberDao.findByMemId(member.getMemId());
-		Member memberInfo = o.orElseThrow();
-		return member.getMemPw().equals(memberInfo.getMemPw()) ? memberInfo : null; 
+	public Optional<Member> login(Member member) {
+		Member resMember = memberDao.findByMemId(member.getMemId());
+		return member.getMemPw().equals(resMember.getMemPw()) ? Optional.of(resMember) : Optional.empty(); 
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class MemberServiceimpl implements MemberService{
 
 	@Override
 	public boolean isDuplicateId(String memId) {
-		Optional<Member> o = memberDao.findByMemId(memId);
-		return o.isPresent();
+		Member resMember = memberDao.findByMemId(memId);
+		return (resMember == null) ? false : true;
 	}
 }
