@@ -62,9 +62,9 @@ public class MemberController {
 		return memberService.memberList();
 	}
 	
-//	//회원가입 중복체크
-//	@GetMapping("/check/{memId}")
-//	public boolean idDuplicateCheck(@PathVariable(value="memId") @RequestBody Member member) {
-//		return memberService.getMemberInfo(member).isEmpty();
-//	}
+	//회원가입 중복체크
+	@GetMapping("/check/{memId}")
+	public boolean idDuplicateCheck(@PathVariable(value="memId") @RequestBody Member member) {
+		return memberService.getMemberInfo(member).isEmpty();
+	}
 }	

@@ -17,4 +17,6 @@ public interface MemberService {
 	public Member login(Member member);
 	//리스트
 	public List<Member> memberList();
+	//아이디 중복체크
+	public boolean isDuplicateId(String memId);
 }

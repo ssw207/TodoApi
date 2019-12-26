@@ -27,13 +27,19 @@ public class MemberServiceimpl implements MemberService{
 
 	@Override
 	public Member login(Member member) {
-		Member memberInfo =memberDao.findByMemId(member.getMemId());
-		System.out.println(memberInfo);
+		Optional<Member> o = memberDao.findByMemId(member.getMemId());
+		Member memberInfo = o.orElseThrow();
 		return member.getMemPw().equals(memberInfo.getMemPw()) ? memberInfo : null; 
 	}
 
 	@Override
 	public List<Member> memberList() {
 		return memberDao.findAll();
+	}
+
+	@Override
+	public boolean isDuplicateId(String memId) {
+		Optional<Member> o = memberDao.findByMemId(memId);
+		return o.isPresent();
 	}
 }
