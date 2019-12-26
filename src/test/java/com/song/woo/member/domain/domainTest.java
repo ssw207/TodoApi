@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.song.woo.member.dao.MemberDao;
+import com.song.woo.member.dao.MemberRepository;
 import com.song.woo.member.model.Member;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class domainTest {
 	@Autowired
-	MemberDao memberDao;
+	MemberRepository memberDao;
 	
 	@Test
 	public void 저장_단일조회_테스트(){

@@ -6,10 +6,10 @@ import com.song.woo.common.model.ApiResponse;
 
 import lombok.Builder;
 
-public class ToDoItemResponse extends ApiResponse<ToDoItem> {
+public class TodoItem extends ApiResponse<Todo> {
 	
 	@Builder
-	public ToDoItemResponse(final ToDoItem todoItem, final List<String> errors) {
+	public TodoItem(final Todo todoItem, final List<String> errors) {
 		super(todoItem);
 		this.setErrors(errors);
 	}

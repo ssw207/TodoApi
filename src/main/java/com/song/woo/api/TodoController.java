@@ -13,41 +13,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.song.woo.todo.model.ToDoItem;
-import com.song.woo.todo.service.ToDoItemService;
+import com.song.woo.todo.model.Todo;
+import com.song.woo.todo.service.TodoService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequestMapping("/api/todo")
 @RestController
-public class ToDoController {
+public class TodoController {
 	@Autowired
-	private ToDoItemService toDoItemService;
+	private TodoService todoService;
 	
 	@PostMapping("/save")
-	public ToDoItem save(@RequestBody ToDoItem dto) {
+	public Todo save(@RequestBody Todo dto) {
 		log.info(dto.toString());
-		return toDoItemService.save(dto);
+		return todoService.save(dto);
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<ToDoItem> get(@PathVariable(value="id") Long id) {
-		return toDoItemService.get(id);
+	public Optional<Todo> get(@PathVariable(value="id") Long id) {
+		return todoService.get(id);
 	}
 	
 	@GetMapping("/list")
-	public List<ToDoItem> list() {
-		return toDoItemService.list();
+	public List<Todo> list() {
+		return todoService.list();
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable(value = "id") Long id) {
- 		toDoItemService.delete(id);
+ 		todoService.delete(id);
 	}
 	
 	@PutMapping("/update")
-	public void update(@RequestBody ToDoItem toDoItem) {
-		toDoItemService.update(toDoItem);
+	public void update(@RequestBody Todo toDoItem) throws Exception {
+		todoService.update(toDoItem);
 	}
 }	

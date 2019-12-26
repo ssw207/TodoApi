@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 import com.song.woo.common.domain.BaseEntity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,12 +19,22 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class ToDoItem extends BaseEntity{
+public class Todo extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	@Column(length = 30)
 	private String title;
+	
 	@Column
 	private boolean done;
+	
+	@Builder
+	public Todo(String title, boolean done) {
+		this.title = title;
+		this.done = done;
+	}
+	
+	
 }
