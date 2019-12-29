@@ -52,3 +52,7 @@ hs_err_pid*
 .json
 .bat
 gradlew
+build.gradle
+gradlew.bat
+settings.gradle
+.vscode/settings.json
