@@ -1,44 +1,47 @@
 package com.song.woo.member.service.impl;
 
+import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.song.woo.member.dao.MemberDao;
+import com.song.woo.member.dao.MemberRepository;
 import com.song.woo.member.model.Member;
 import com.song.woo.member.service.MemberService;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Service
 public class MemberServiceimpl implements MemberService{
 	@Autowired
-	MemberDao memberDao;
+	MemberRepository memberRepository;
 	
 	@Override
-	public Member memberSave(Member member) {
-		return memberDao.save(member);
+	public Member memberSave(Member member) throws Exception {
+		if (isDuplicateId(member.getMemId())) {
+			throw new Exception("중복된 아이디 입니다.");
+		}
+		return memberRepository.save(member);
 	}
 
 	@Override
-	public Optional<Member> getMemberInfo(Long id) {
-		return memberDao.findById(id);
+	public Member getMemberInfo(String memId) {
+		return memberRepository.findByMemId(memId);
 	}
 
 	@Override
-	public Member login(Member member) {
-		Member memberInfo =memberDao.findByMemId(member.getMemId());
-		System.out.println(memberInfo);
-		return member.getMemPw().equals(memberInfo.getMemPw()) ? memberInfo : null; 
+	public Optional<Member> login(Member member) {
+		Member resMember = memberRepository.findByMemId(member.getMemId());
+		return member.getMemPw().equals(resMember.getMemPw()) ? Optional.of(resMember) : Optional.empty(); 
+	}
+
+	@Override
+	public List<Member> memberList() {
+		return memberRepository.findAll();
+	}
+
+	@Override
+	public boolean isDuplicateId(String memId) {
+		Member resMember = memberRepository.findByMemId(memId);
+		return (resMember == null) ? false : true;
 	}
 }

@@ -19,6 +19,7 @@ group = 'com.song'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+
 repositories {
 	mavenCentral()
 }
@@ -29,10 +30,12 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+	compile "org.springframework.boot:spring-boot-configuration-processor"
 	
-	compileOnly('org.projectlombok:lombok')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	
+	//lombok
+	compileOnly('org.projectlombok:lombok')
 	// maiaDB
 	//compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.3.0'
 	// h2
@@ -47,8 +50,4 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-data-rest', version: '2.9.2'
-	
-	
-	
-	
 }
