@@ -18,8 +18,6 @@ import com.song.woo.todo.service.TodoService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TodoServiceTest {
-//	public Optional<Todo> get(Long id);
-//	public void delete(long id);
 	
 	@Autowired
 	TodoRepository todoRepository;

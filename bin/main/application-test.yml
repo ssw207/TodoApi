@@ -37,13 +37,11 @@ spring:
       enabled: true
 
 logging:
-  file: logs/application.log #생성되는 로그파일 위치
   level:
     org:
-      thymeleaf: DEBUG
       springframework.web: DEBUG
       hibernate.SQL: DEBUG
-      quartz.core: DEBUG
+      #quartz.core: DEBUG
       h2.server.web: DEBUG
     com: #패키지별 로깅 설정
       song: DEBUG
