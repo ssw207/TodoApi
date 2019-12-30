@@ -87,7 +87,6 @@
     <!-- appedner를 참조해서 로거가 사용될 패키지와 로그레벨을 결정한다. -->
     <logger name="com.song" level="DEBUG">
         <appender-ref ref="ROLLING" />
-        <appender-ref ref="CONSOLE" />
     </logger>
     
 	<!-- root -->    
