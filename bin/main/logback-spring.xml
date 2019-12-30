@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 
+	logback.xml으로 스프링부트가 설정되기전 로그백 설정을 해버리기 때문에
+	파일명을 logback-spring.xml 으로 사용한다.
+	-->
+	
+	<!-- property는 설정파일에서 사용될 값을 정의한다. -->
+    <property name="LOGS_ABSOLUTE_PATH" value="./logs" />
+ 	
+ 	<!-- appender : 어디에 어떻게 로그를 찍을지 결정한다. -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    	<!-- 
+    	들어오는 이벤트를 String으로 변환한다. 
+    	이벤트가 기록될때 제어할수 없다. 
+    	이벤트를 일괄로 처리할 수 없다. 
+    	-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
+        </layout>
+    </appender>
+    
+    <!-- 콘솔에 로그를 찍는다. -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+        	<!-- 
+        	%d : 로그 기록시간
+        	%thread : Thread 이름
+        	%-5level : 로그레벨 
+        	%Logger{35} : 로거의 이름을 35자리수 까지 표시
+        	%msg : 출력 매세지
+        	%n : 줄바꿈
+        	-->
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+   
+    
+    <!-- 여러개의 파일을 순회하면서 로그를 찍는다. -->
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<!-- 로그파일 저장위치 -->
+        <file>${LOGS_ABSOLUTE_PATH}/logback.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        	<!-- 로그 파일 이름 형식 -->
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/logback.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 한파일당 최대 크기 -->
+                <maxFileSize>5MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 유지하는 로그 파일의 개수. 롤링 정책이 일단위이면 30일간 저장되고 월단위 이면 30개월간 저장된다. -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    	<!-- Filter : 원하는 로그레벨만 찍을수 있다. -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+	    	<!-- 로그레벨이  error경우만 출력 -->
+	        <level>error</level>
+	        <onMatch>ACCEPT</onMatch>
+	        <onMismatch>DENY</onMismatch>
+	    </filter>
+	    <!-- 로그 저장위치 -->
+	    <file>Log/error.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	    	<!-- 파일명 생성 패턴-->
+	        <fileNamePattern>Log/error-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+	        <!-- 최대 단일 로그파일 크기 -->
+	        <maxFileSize>100MB</maxFileSize>
+	        <!-- 60일간유지 -->
+	        <maxHistory>60</maxHistory>
+	        <!-- 전체 로그파일 최대 크기 -->
+	        <totalSizeCap>10GB</totalSizeCap>
+	    </rollingPolicy>
+	    <encoder>
+	        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}[%-5level] : %msg%n</pattern>
+	    </encoder>
+	</appender>
+    
+    <!-- logger -->
+    <!-- appedner를 참조해서 로거가 사용될 패키지와 로그레벨을 결정한다. -->
+    <logger name="com.song" level="DEBUG">
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+    
+	<!-- root -->    
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
