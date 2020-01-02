@@ -1,4 +1,4 @@
-package com.song.woo.member.dao;
+package com.song.woo.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

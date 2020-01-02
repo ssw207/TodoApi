@@ -26,11 +26,11 @@ spring:
   
   jpa:
     hibernate:
-      ddl-auto: update # 스키마관리 
-    show-sql: true # sql 디버그
+      ddl-auto: create # 스키마관리 
+    show-sql: false # sql 디버그
     properties:
       hibernate:
-        format_sql : true # sql 포멧정리
+        format_sql : false # sql 포멧정리
       
   devtools: # 핫리로드 사용
     livereload:
@@ -40,7 +40,7 @@ logging:
   level:
     org:
       springframework.web: DEBUG
-      hibernate.SQL: DEBUG
+      hibernate.SQL: TRACE
       #quartz.core: DEBUG
       h2.server.web: DEBUG
     com: #패키지별 로깅 설정
