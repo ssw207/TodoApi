@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.song.woo.todo.dao.TodoRepository;
 import com.song.woo.todo.model.Todo;
+import com.song.woo.todo.repository.TodoRepository;
 
 @Service
 public class TodoServiceImpl implements TodoService{

@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.song.woo.todo.dao.TodoRepository;
 import com.song.woo.todo.model.Todo;
+import com.song.woo.todo.repository.TodoRepository;
 import com.song.woo.todo.service.TodoService;
 
 @RunWith(SpringRunner.class)

@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.song.woo.member.dao.MemberRepository;
 import com.song.woo.member.model.Member;
+import com.song.woo.member.repository.MemberRepository;
 import com.song.woo.member.service.MemberService;
 
 @Service
