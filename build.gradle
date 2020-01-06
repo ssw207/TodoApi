@@ -1,3 +1,5 @@
+//그래들 버전 변경시 프로젝트 경로에서 gradle wrapper --gradle-version=5.6.1 입력
+
 buildscript {
 	ext {
 		springBootVersion = '2.1.0.RELEASE'
@@ -10,6 +12,7 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}") // querydsl 플러그인 의존성 등록
+		classpath("io.franzbecker:gradle-lombok:1.8") // entity에 lomboc 어노테이션이 있을경우 이 의존성이 있어야 에러가 발생하지 않음
 	}
 }
 
@@ -17,11 +20,12 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: "com.ewerk.gradle.plugins.querydsl" // Plugin 적용
+apply plugin: "com.ewerk.gradle.plugins.querydsl" // querydsl 플러그인
+apply plugin: 'io.franzbecker.gradle-lombok' // lombok + querydsl 사용시
 
 group = 'com.song'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.11
+sourceCompatibility = 1.11 
 
 
 repositories {
@@ -62,13 +66,22 @@ dependencies {
 }
 
 // querydsl 적용
-
-def querydslSrcDir = 'src/main/generated' // QClass 생성 위치
+def querydslSrcDir = 'src/main/generated' // Qclass 생성위치
 
 querydsl {
     library = "com.querydsl:querydsl-apt"
     jpa = true
     querydslSourcesDir = querydslSrcDir
+}
+
+// gradle 5.x 버전시 추가
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+// gradle 5.x 버전시 추가
+configurations {
+    querydsl.extendsFrom compileClasspath
 }
 
 sourceSets {
