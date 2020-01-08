@@ -32,7 +32,6 @@ public class BoardCustomRepositoryTest {
 	public void 데이터저장() {
 		for (int i = 1; i <= 10; i++) {
 			r.save(Board.builder()
-							.memId("admin")
 							.title("title"+i)
 							.content("content"+i)
 							.build());
@@ -42,11 +41,11 @@ public class BoardCustomRepositoryTest {
 	
 	@Test
 	public void 최근등록글_테스트() {
-//		//when
-//		List<Board> list = r.findRecentlyRegistered(2);
-//		
-//		//then
-//		assertThat(list.size()).isEqualTo(2);
-//		assertThat(list.get(0).getTitle()).isEqualTo("title10");
+		//when
+		List<Board> list = r.findRecentlyRegistered(2);
+		
+		//then
+		assertThat(list.size()).isEqualTo(2);
+		assertThat(list.get(0).getTitle()).isEqualTo("title10");
 	}
 }

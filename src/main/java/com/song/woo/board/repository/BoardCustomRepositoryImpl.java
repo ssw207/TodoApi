@@ -24,7 +24,4 @@ public class BoardCustomRepositoryImpl extends QuerydslRepositorySupport impleme
 				.orderBy(board.dtFrt.desc())
 				.fetch();
 	}
-	
-	
-
 }
