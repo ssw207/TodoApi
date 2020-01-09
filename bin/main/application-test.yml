@@ -23,15 +23,16 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver  #h2 드라이버 설정
+    url: jdbc:h2:mem:testdb
   
   jpa:
     hibernate:
-      ddl-auto: create # 스키마관리 
-    show-sql: false # sql 디버그
+      ddl-auto: update # 스키마관리 
+    show-sql: true # sql 디버그
     properties:
       hibernate:
-        format_sql : false # sql 포멧정리
-      
+        format_sql: true # sql 포멧정리
+          
   devtools: # 핫리로드 사용
     livereload:
       enabled: true
@@ -39,9 +40,9 @@ spring:
 logging:
   level:
     org:
-      springframework.web: DEBUG
-      hibernate.SQL: TRACE
+      springframework.web: INFO
+      hibernate.SQL: DEBUG
       #quartz.core: DEBUG
-      h2.server.web: DEBUG
+      h2.server.web: INFO
     com: #패키지별 로깅 설정
       song: DEBUG
