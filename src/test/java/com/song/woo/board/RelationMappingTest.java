@@ -1,25 +1,29 @@
 package com.song.woo.board;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Iterator;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.querydsl.core.BooleanBuilder;
 import com.song.woo.board.model.Board;
+import com.song.woo.board.model.QBoard;
 import com.song.woo.board.repository.BoardRepository;
 import com.song.woo.member.model.Member;
 import com.song.woo.member.repository.MemberRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@RequiredArgsConstructor
 public class RelationMappingTest {
+	@Autowired
 	private MemberRepository mr;
-	
+	@Autowired
 	private BoardRepository br;
 	
 	@After
@@ -28,18 +32,35 @@ public class RelationMappingTest {
 		br.deleteAll();
 	}
 	
-	@Test
-	public void 연관관계테스트() {
+//	@Test
+	public void 연관관계저장() {
+		//given
 		Member m1 = mr.save(Member.builder().memName("name1").memId("id1").memPw("pw1").build());
-		Member m2 = mr.save(Member.builder().memName("name2").memId("id2").memPw("pw2").build());
 		
+		//when
 		for (int i = 0; i<4; i++) {
 			br.save(Board.builder().content("content"+i).title("titie"+i).cnt(i).memeber(m1).build());
 		}
 		
-		for (int i = 0; i<4; i++) {
-			br.save(Board.builder().content("content"+i).title("titie"+i).cnt(i).memeber(m2).build());
+		//then
+		assertThat(br.findAll().get(0).getMemeber().getMemId()).isEqualTo("id1");
+	}
+	
+	@Test
+	public void 게시글상세조회() {
+		//given
+		Member m1 = mr.save(Member.builder().memName("name1").memId("id1").memPw("pw1").build());
+		
+		for (int i = 0; i<1; i++) {
+			br.save(Board.builder().content("content"+i).title("titie"+i).cnt(i).memeber(m1).build());
 		}
+				
+		//when
+		//@ManyToOne 기본속성은 EAGER이므로 회원정보도 같이조회
+		Board board = br.findById(1L).get();
+		
+		//then
+		assertThat(board.getMemeber().getMemName()).isEqualTo("name1");
 	}
 	
 }
